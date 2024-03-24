@@ -1,0 +1,58 @@
+// https://school.programmers.co.kr/learn/courses/19344/lessons/242259
+#include <string>
+#include <vector>
+#include <queue>
+#include <utility>
+#include <algorithm>
+#include <set>
+#include <tuple>
+
+using namespace std;
+
+int solution(vector<vector<int>> land) {
+    int answer = 0;
+    vector<int> gain(land[0].size());
+    queue<pair<int, int>> q;
+    vector<vector<bool>> visited(land.size());
+    for(auto& v: visited){
+        v.resize(land[0].size());
+    }
+    
+    set<int> oil;
+    
+    for(int y = 0 ;y < land.size(); ++y){
+        for(int x = 0 ; x < land[0].size(); ++x){
+            if(!land[y][x] || visited[y][x]) continue;
+            q.emplace(x,y);
+            
+            int cx, cy, count;
+            count = 0;
+            while(!q.empty()){
+                tie(cx,cy) = q.front(); q.pop();
+                
+                if(visited[cy][cx]) continue;
+                visited[cy][cx] = 1;
+                if(!land[cy][cx]) continue;
+                oil.emplace(cx);
+                count++;
+                
+                q.emplace(cx, max(0, cy-1));
+                q.emplace(max(0, cx-1), cy);
+                q.emplace(min((int)land[0].size() - 1, cx+1), cy);
+                q.emplace(cx, min((int)land.size() - 1, cy+1));
+            }
+
+            for(auto o: oil){
+                gain[o] += count;
+            }
+            
+            oil.clear();
+            
+        }
+    
+    }
+    
+    answer = *max_element(gain.begin(), gain.end());
+    
+    return answer;
+}
