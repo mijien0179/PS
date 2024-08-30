@@ -1,5 +1,3 @@
 # PS
 
-PS with
-* [관휘](https://github.com/gwanhwi/BOJ)
-* [명석](https://github.com/cacaocoffee/Baekjoon)
+[백준](https://acmicpc.net), [프로그래머스](https://programmers.co.kr) 문제 풀면서 이벤트적인 문제들 풀이
